@@ -126,7 +126,14 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if (rect1.top > rect2.top) {
+        let temp = rect2;
+        rect2 = rect1; 
+        rect1 = temp;
+    }
+    const conditionOne = rect1.top + rect1.height > rect2.top;
+    const conditionTwo = rect1.left + rect1.width > rect2.left;
+    return conditionOne && conditionTwo;
 }
 
 
@@ -383,8 +390,8 @@ function timespanToHumanString(startDate, endDate) {
     if (timeSpan <= 36 * hour) return 'a day ago';
     if (timeSpan <= 25 * day) return roundTime(timeSpan, day) + ' days ago';
     if (timeSpan <= 45 * day) return 'a month ago';
-    if (timeSpan <= 11.5 * month) return roundTime(timeSpan, month) + ' months ago';
-    if (timeSpan <= 18 * month) return 'a year ago';
+    if (timeSpan <= 345 * day) return roundTime(timeSpan, month) + ' months ago';
+    if (timeSpan <= 545 * day) return 'a year ago';
     return roundTime(timeSpan, year) + ' years ago';
 }
 
@@ -449,7 +456,22 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    let rows1 = m1.length;
+    let rows2 = m2.length;
+    let cols2 = m2[0].length;
+
+    const matrixProduct = Array.from(new Array(rows1), () => []);
+
+    for (let i = 0; i < cols2; i += 1) {
+    	for (let j = 0; j < rows1; j += 1) {
+    		let currSum = 0;
+          	for (let k = 0; k < rows2; k++) {
+                currSum += m1[j][k] * m2[k][i];
+          	}
+          	matrixProduct[j][i] = currSum;
+        }
+    }
+    return matrixProduct;
 }
 
 
@@ -484,7 +506,25 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    for (let i = 0; i < position.length; i += 1) {
+        if (position[i][0] === position[i][1] &&
+            position[i][0] === position[i][2] &&
+            position[i][0]) return position[i][0];
+        }
+
+    for (let j=0; j < position.length; j += 1) {
+        if (position[0][j] === position[1][j] &&
+            position[0][j] === position[2][j] &&
+           position[0][j]) return position[0][j];
+        }
+
+    if (position[0][0] === position[1][1] &&
+        position[1][1] === position[2][2] &&
+        position[0][0]) return position[0][0];
+
+    if (position[0][2]===position[1][1] &&
+        position[1][1]===position[2][0] &&
+        position[0][2]) return position[0][2];
 }
 
 
